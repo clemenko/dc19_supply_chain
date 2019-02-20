@@ -1,0 +1,9 @@
+version: "3.4"
+services:
+  app:
+    image: clemenko/dc18:0.2
+    deploy:
+      replicas: 6
+      mode: replicated
+    ports:
+      - 5000:5000

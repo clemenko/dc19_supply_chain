@@ -1,0 +1,12 @@
+version: "3.2"
+services:
+  jenkins:
+    image: clemenko/dc18:jenkins
+    deploy:
+      placement:
+        constraints:
+          - 'node.hostname == worker3'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 8080:8080
