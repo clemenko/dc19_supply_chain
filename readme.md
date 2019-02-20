@@ -2,9 +2,9 @@
 
 ## Who am i?
 
-	* Github : [](https://github.com/clemenko)
-	* Twitter : @clemenko [](https://twitter.com/clemenko)
-	* Email : [clemenko@docker.com](mailto:clemenko@docker.com)
+  * Github : [](https://github.com/clemenko)
+  * Twitter : @clemenko [](https://twitter.com/clemenko)
+  * Email : [clemenko@docker.com](mailto:clemenko@docker.com)
 
 ---
 
