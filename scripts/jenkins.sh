@@ -3,10 +3,10 @@
 
 if [ -z ${DOCS_URL+x} ]; then
   echo "Setting variables for you..."
-  . ~/dc18_supply_chain/scripts/var_setup.sh
+  . ~/dc19_supply_chain/scripts/var_setup.sh
 fi
 
-jenkins_id=$(docker run -d -p 8080:8080 -v /var/run/docker.sock:/var/run/docker.sock clemenko/dc18:jenkins)
+jenkins_id=$(docker run -d -p 8080:8080 -v /var/run/docker.sock:/var/run/docker.sock clemenko/dc19:jenkins)
 echo $jenkins_id > jenkins.id
 
 echo "========================================================================================================="

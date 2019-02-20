@@ -9,13 +9,13 @@ fi
 
 curl -X POST -sk -L \
   -u $DTR_USERNAME:$DTR_TOKEN \
-   https://$DTR_URL/api/v0/repositories/ci/dc18_build/promotionPolicies?initialEvaluation=true \
+   https://$DTR_URL/api/v0/repositories/ci/dc19_build/promotionPolicies?initialEvaluation=true \
   -H 'Content-Type: application/json' \
   -d '{
   "enabled": true,
   "rules": [ { "field": "vulnerability_critical", "operator": "lte", "values": [ "0" ] } ],
   "tagTemplate": "%n",
-  "targetRepository": "ci/dc18"
+  "targetRepository": "ci/dc19"
 }'
 
 echo ""

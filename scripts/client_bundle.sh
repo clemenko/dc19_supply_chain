@@ -3,7 +3,7 @@
 
 if [ -z ${UCP_URL+x} ]; then
   echo Setting variables for you...
-  . ~/dc18_supply_chain/scripts/var_setup.sh
+  . ~/dc19_supply_chain/scripts/var_setup.sh
 fi
 
 AUTHTOKEN=$(curl -sk -d '{"username":"admin","password":"admin1234"}' https://$UCP_URL/auth/login | jq -r .auth_token)

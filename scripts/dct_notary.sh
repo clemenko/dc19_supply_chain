@@ -3,11 +3,11 @@
 
 if [ -z ${DTR_URL+x} ]; then
   echo Setting variables for you...
-  . ~/dc18_supply_chain/scripts/var_setup.sh
+  . ~/dc19_supply_chain/scripts/var_setup.sh
 fi
 
 export NAMESPACE="ci"
-export REPO="dc18"
+export REPO="dc19"
 export ROLE="demo"
 
 # disable DCT

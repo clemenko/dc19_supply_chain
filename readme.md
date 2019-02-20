@@ -1,4 +1,12 @@
-# Secure, Automated Software Supply Chain - Dockercon 2018
+# Secure, Automated Software Supply Chain - Dockercon 2019
+
+## Who am i?
+
+	* Github : https://github.com/clemenko
+	* Twitter : @clemenko https://twitter.com/clemenko
+	* Email : clemenko@docker.com
+
+---
 
 In this lab you will integrate Docker Enterpise Edition Advanced in to your development pipeline. You will build your application from a Dockerfile and push your image to the Docker Trusted Registry (DTR). DTR will scan your image for vulnerabilities so they can be fixed before your application is deployed. This helps you build more secure apps!
 
@@ -100,14 +108,14 @@ We are going to use `worker3` for **ALL** our command line work. Click on `worke
 
 Now we need to setup a few variables. We need to create `DTR_URL` and `DTR_USERNAME`. But the easiest way is to clone the Workshop Repo and run script.
 
-```
-git clone https://github.com/clemenko/dc18_supply_chain.git
+```bash
+git clone https://github.com/clemenko/dc19_supply_chain.git
 ```
 
 Once cloned, now we can run the `var_setup.sh` script.
 
-```
-. dc18_supply_chain/scripts/var_setup.sh
+```bash
+. dc19_supply_chain/scripts/var_setup.sh
 ```
 
 Now your PWD environment variables are setup. We will use the variables for some scripting.
@@ -176,7 +184,7 @@ It should look like `ee9d7ff2-6fd4-4a41-9971-789e06e0d5d5`. Click `Done`.
 
 Lets add it to the `worker3` environment. Replace `<TOKEN>` with the token from DTR.
 
-```
+```bash
 #example
 #export DTR_TOKEN=ee9d7ff2-6fd4-4a41-9971-789e06e0d5d5
 export DTR_TOKEN=<TOKEN>
@@ -187,21 +195,21 @@ We now need to access Docker Trusted Registry to setup two repositories.
 
 We have an easy way with a script or the hard way by using the GUI.
 
-Either way we need to create two repositories, `dc18_build` and `dc18`. `dc18_build` will be used for the private version of the image. `dc18` will be the public version once an CVE scan is complete.
+Either way we need to create two repositories, `dc19_build` and `dc19`. `dc19_build` will be used for the private version of the image. `dc19` will be the public version once an CVE scan is complete.
 
 **Easy Way:**
 
 Since we used `git clone` to copy the repository to `worker3` for this workshop, there is a script from that will create the DTR repositories.
 
-```
-./dc18_supply_chain/scripts/create_repos.sh
+```bash
+./dc19_supply_chain/scripts/create_repos.sh
 ```
 
 Feel free to `cat` the file to see how we are using `curl` and the API to create the repositories.
 
-```
+```bash
 [worker3] (local) root@10.20.0.38 ~
-$ cat dc18_supply_chain/scripts/create_repos.sh
+$ cat dc19_supply_chain/scripts/create_repos.sh
 #!/bin/bash
 # requires environment variables: DTR_HOST, DTR_USERNAME and DTR_TOKEN
 
@@ -218,9 +226,9 @@ curl -X POST -k -L \
   "enableManifestLists": true,
   "immutableTags": true,
   "longDescription": "",
-  "name": "dc18",
+  "name": "dc19",
   "scanOnPush": true,
-  "shortDescription": "Dockercon 2018 Example - public",
+  "shortDescription": "Dockercon 2019 Example - public",
   "visibility": "public"
 }'
 
@@ -232,9 +240,9 @@ curl -X POST -k -L \
   "enableManifestLists": true,
   "immutableTags": true,
   "longDescription": "",
-  "name": "dc18_build",
+  "name": "dc19_build",
   "scanOnPush": true,
-  "shortDescription": "Dockercon 2018 Example - private",
+  "shortDescription": "Dockercon 2019 Example - private",
   "visibility": "public"
 }'
 ```
@@ -242,26 +250,26 @@ curl -X POST -k -L \
 **Hard Way:**
 
 1. Navigate to `Repositories` on the left menu and click `New repository`.
-2. Create that looks like `ci`/`dc18_build`. Make sure you click `Private`. Do not click `Create` yet!
+2. Create that looks like `ci`/`dc19_build`. Make sure you click `Private`. Do not click `Create` yet!
 3. Click `Show advanced settings` and then click `On Push` under `SCAN ON PUSH`.  This will ensure that the CVE scan will start right after every push to this repository.  And turn on `IMMUTABILITY `. Then click `Create`.
 ![](img/new_repo.jpg)
 
-4. Repeat this for creating the `ci`/`dc18` `Public` repository with `SCAN ON PUSH` set to `On Push`.
+4. Repeat this for creating the `ci`/`dc19` `Public` repository with `SCAN ON PUSH` set to `On Push`.
 5. We should have two repositories now.
     ![](img/repo_list.jpg)
 
 ### <a name="task4.1"></a>Task 4.1: Create Promotion Policy - Private to Public
-With the two repositories setup we can now define the promotion policy. The first policy we are going to create is for promoting an image that has passed a scan with zero (0) **Critical** vulnerabilities. The policy will target the `ci`/`dc_18` repository.
+With the two repositories setup we can now define the promotion policy. The first policy we are going to create is for promoting an image that has passed a scan with zero (0) **Critical** vulnerabilities. The policy will target the `ci`/`dc19` repository.
 
-1. Navigate to the `ci`/`dc18_build` repository. Click `Promotions` and click `New promotion policy`. Note: Make sure the `Is source` box is
+1. Navigate to the `ci`/`dc19_build` repository. Click `Promotions` and click `New promotion policy`. Note: Make sure the `Is source` box is
 selected.
   ![](img/create_policy.jpg)
 
 2. In the `PROMOTE TO TARGET IF...` box select `Critical Vulnerabilities` and then check `equals`. In the box below `equals` enter the number zero (0) and click `Add`.
-3. Set the `TARGET REPOSITORY` to `ci`/`dc18` and click `Save & Apply`.
+3. Set the `TARGET REPOSITORY` to `ci`/`dc19` and click `Save & Apply`.
   ![](img/promo_policy.jpg)
 
-When we push an image to `ci`/`dc18_build` it will get scanned. Based on that scan report we could see the image moved to `ci`/`dc18`. Lets push a few images to see if it worked.
+When we push an image to `ci`/`dc19_build` it will get scanned. Based on that scan report we could see the image moved to `ci`/`dc19`. Lets push a few images to see if it worked.
 
 ## <a name="task5"></a>Task 5: Pull / Tag / Push Docker Image
 Lets pull, tag, and push a few images to YOUR DTR.
@@ -272,7 +280,7 @@ In order to push and pull images to DTR we will need to take advantage of PWD's 
 2. Click on `worker3`.
 3. In the console we should already have a variable called `DTR_URL`. Lets check.
 
-	```
+	```bash
 	echo $DTR_URL
 	```
 
@@ -281,46 +289,43 @@ In order to push and pull images to DTR we will need to take advantage of PWD's 
 
 4. Now we login to our DTR server using your `DTR_TOKEN` from [Task 3.3: Create Jenkins DTR Token](#task3.3).
 
-	```
+	```bash
 	docker login -u jenkins -p $DTR_TOKEN $DTR_URL
 	```
 
 5. Now we can start pulling a few images.
 
-	```
-	docker pull clemenko/dc18:0.1
-	docker pull clemenko/dc18:0.2
-	docker pull clemenko/dc18:0.3
+	```bash
+	docker pull clemenko/dc19:0.1
+	docker pull clemenko/dc19:0.2
+	docker pull clemenko/dc19:0.3
 	docker pull alpine
-
 	```
 
   This command is pull a few images from [hub.docker.com](https://hub.docker.com).
 
 6. Now let's tag the image for our DTR instance. We will use the `URL` variable we set before.
 
-	```
-	docker tag clemenko/dc18:0.1 $DTR_URL/ci/dc18_build:0.1
-	docker tag clemenko/dc18:0.2 $DTR_URL/ci/dc18_build:0.2
-	docker tag clemenko/dc18:0.3 $DTR_URL/ci/dc18_build:0.3
-	docker tag alpine $DTR_URL/ci/dc18_build:alpine
-
+	```bash
+	docker tag clemenko/dc19:0.1 $DTR_URL/ci/dc19_build:0.1
+	docker tag clemenko/dc19:0.2 $DTR_URL/ci/dc19_build:0.2
+	docker tag clemenko/dc19:0.3 $DTR_URL/ci/dc19_build:0.3
+	docker tag alpine $DTR_URL/ci/dc19_build:alpine
 	```
 
 7. Now we can `docker push` the images to DTR.
 
-	```
-	docker push $DTR_URL/ci/dc18_build:0.1
-	docker push $DTR_URL/ci/dc18_build:0.2
-	docker push $DTR_URL/ci/dc18_build:0.3
-	docker push $DTR_URL/ci/dc18_build:alpine
-
+	```bash
+	docker push $DTR_URL/ci/dc19_build:0.1
+	docker push $DTR_URL/ci/dc19_build:0.2
+	docker push $DTR_URL/ci/dc19_build:0.3
+	docker push $DTR_URL/ci/dc19_build:alpine
 	```
 
 ## <a name="task6"></a>Task 6: Review Scan Results
 Lets take a good look at the scan results from the images. Please keep in mind this will take a few minutes to complete.
 
-1. Navigate to DTR --> `Repostories` --> `ci/dc18_build` --> `Images`.
+1. Navigate to DTR --> `Repostories` --> `ci/dc19_build` --> `Images`.
 
 	Do worry if you see images in a `Scanning...` or `Pending` state. Please click to another tab and click back.
 
@@ -338,7 +343,7 @@ Lets take a good look at the scan results from the images. Please keep in mind t
 
     ![](img/image_comp.jpg)
 
-    Now we have a chance to review each vulnerability by clicking the CVE itself, example `CVE-2018-0500`. This will direct you to Mitre's site for CVEs.
+    Now we have a chance to review each vulnerability by clicking the CVE itself, example `CVE-2019-0500`. This will direct you to Mitre's site for CVEs.
 
     ![](img/mitre.jpg)
 
@@ -358,14 +363,14 @@ Once we have hidden some CVEs we might want to perform a manual promotion of the
 ### <a name="task6.2"></a>Task 6.2: Manually Promote Image
 Manual promotions are useful for those times that you need to move an image from a `Private` repository to a `Public` one. To perform a manual promotion :
 
-1. Click on an image's details. Lets go back to `0.2`, now click `Promote`. Lets `Promote` the image to `ci`/`dc18` with a tag of `promoted`.
+1. Click on an image's details. Lets go back to `0.2`, now click `Promote`. Lets `Promote` the image to `ci`/`dc19` with a tag of `promoted`.
 
      ![](img/promote.jpg)
 
 2. Click `Promote`.
     Lets look at the promoted image.
 
-3. Navigate to `ci`/`dc18` --> `Images`. The `promoted` TAG should exist.
+3. Navigate to `ci`/`dc19` --> `Images`. The `promoted` TAG should exist.
 
       ![](img/promoted.jpg)
 
@@ -378,7 +383,7 @@ This not only allows you to mirror images but also allows you to create image pr
 
 1. Go to [hub.docker.com](https://hub.docker.com) and create an login and repository.
 
-2. Navigate to `Repositories` --> `ci`/`dc18` --> `MIRRORS` --> `New mirror`.
+2. Navigate to `Repositories` --> `ci`/`dc19` --> `MIRRORS` --> `New mirror`.
    Change the `REGISTRY TYPE` to `Docker Hub` and fill out the relevant information like:
 
    ![](img/mirror.jpg)
@@ -402,24 +407,24 @@ We can create policy enforcement within Universal Control Plane (UCP) such that 
 
 Let's sign our first Docker image?
 
-1. Right now you should have a promoted image `$DTR_URL/ci/dc18:promoted`. We need to tag it with a new `signed` tag.
+1. Right now you should have a promoted image `$DTR_URL/ci/dc19:promoted`. We need to tag it with a new `signed` tag.
 
-   ```
-   docker pull $DTR_URL/ci/dc18:promoted
-   docker tag $DTR_URL/ci/dc18:promoted $DTR_URL/ci/dc18:signed
+   ```bash
+   docker pull $DTR_URL/ci/dc19:promoted
+   docker tag $DTR_URL/ci/dc19:promoted $DTR_URL/ci/dc19:signed
    ```
 
 2. Now lets use the Trust command... It will ask you for a BUNCH of passwords. Do yourself a favor in this workshop and use `admin1234`. :D
 
-    ```
-    docker trust sign $DTR_URL/ci/dc18:signed
+    ```bash
+    docker trust sign $DTR_URL/ci/dc19:signed
     ```
 
     Here is an example output:
 
-	```
+	```bash
 	[worker3] (local) root@10.20.0.42 ~
-	$ docker trust sign $DTR_URL/ci/dc18:signed
+	$ docker trust sign $DTR_URL/ci/dc19:signed
 	You are about to create a new root signing key passphrase. This passphrase
 	will be used to protect the most sensitive key in your signing system. Please
 	choose a long, complex passphrase and be careful to keep the password and the
@@ -433,9 +438,9 @@ Let's sign our first Docker image?
 	Enter passphrase for new jenkins key with ID ab5049d:
 	Repeat passphrase for new jenkins key with ID ab5049d:
 	Created signer: jenkins
-	Finished initializing signed repository for ip172-18-0-5-bfu00sinjdg00099igu0.direct.ee-beta2.play-with-docker.com/ci/dc18:signed
-	Signing and pushing trust data for local image ip172-18-0-5-bfu00sinjdg00099igu0.direct.ee-beta2.play-with-docker.com/ci/dc18:signed, may overwrite remote trust data
-	The push refers to repository [ip172-18-0-5-bfu00sinjdg00099igu0.direct.ee-beta2.play-with-docker.com/ci/dc18]
+	Finished initializing signed repository for ip172-18-0-5-bfu00sinjdg00099igu0.direct.ee-beta2.play-with-docker.com/ci/dc19:signed
+	Signing and pushing trust data for local image ip172-18-0-5-bfu00sinjdg00099igu0.direct.ee-beta2.play-with-docker.com/ci/dc19:signed, may overwrite remote trust data
+	The push refers to repository [ip172-18-0-5-bfu00sinjdg00099igu0.direct.ee-beta2.play-with-docker.com/ci/dc19]
 	af9af2170d23: Layer already exists
 	cd9a82baa926: Layer already exists
 	c60ea83f6a45: Layer already exists
@@ -443,7 +448,7 @@ Let's sign our first Docker image?
 	signed: digest: sha256:5554013b565fc0ccf080f7cf4ad096ffb1dbc4f83496a86f9efa1252f26ed455 size: 1156
 	Signing and pushing trust metadata
 	Enter passphrase for jenkins key with ID ab5049d:
-	Successfully signed ip172-18-0-5-bfu00sinjdg00099igu0.direct.ee-beta2.play-with-docker.com/ci/dc18:signed
+	Successfully signed ip172-18-0-5-bfu00sinjdg00099igu0.direct.ee-beta2.play-with-docker.com/ci/dc19:signed
 	[worker3] (local) root@10.20.0.42 ~
 	```
 
@@ -451,18 +456,18 @@ Let's sign our first Docker image?
 
 3. And we can confirm the signature has been applied by inspecting the image:
 
-	```
-	docker trust inspect $DTR_URL/ci/dc18:signed
+	```bash
+	docker trust inspect $DTR_URL/ci/dc19:signed
 	```
 
 	Here is the example output:
 
-	```
+	```bash
 	[worker3] (local) root@10.20.0.42 ~
-	$ docker trust inspect $DTR_URL/ci/dc18:signed
+	$ docker trust inspect $DTR_URL/ci/dc19:signed
 	[
     {
-        "Name": "ip172-18-0-5-bfu00sinjdg00099igu0.direct.ee-beta2.play-with-docker.com/ci/dc18:signed",
+        "Name": "ip172-18-0-5-bfu00sinjdg00099igu0.direct.ee-beta2.play-with-docker.com/ci/dc19:signed",
         "SignedTags": [
             {
                 "SignedTag": "signed",
@@ -505,7 +510,7 @@ Let's sign our first Docker image?
 	[worker3] (local) root@10.20.0.42 ~
 	```
 
-4. Back in DTR, Navigate to `Repositories` --> `ci`/`dc18` --> `Tags` and you will now see the new `signed` tag with the text `Signed`
+4. Back in DTR, Navigate to `Repositories` --> `ci`/`dc19` --> `Tags` and you will now see the new `signed` tag with the text `Signed`
 	under the `Signed` column:
 
 	![](img/promoted_signed.jpg)
@@ -513,9 +518,9 @@ Let's sign our first Docker image?
 5. If you were to enable Docker Content Trust in UCP then you would need to upload the public certificate used to sign the image. As we did not
 	perform the `docker trust signer add` command before step 2 above then a public certificate is automatically generated but is not associated to a user in UCP. This means when UCP tries to verify the signature on a signed image to a user it will fail and therefor not meet UCP's Content Trust policy.
 
-	To resolve this issue you can upload the base64 encoded public certificate in `~/.docker/trust/tuf/$DTR_URL/ci/dc18/metadata/targets.json` - the certificate is located in the structure `.signed.delegations.keys` with the key value of `public`.
+	To resolve this issue you can upload the base64 encoded public certificate in `~/.docker/trust/tuf/$DTR_URL/ci/dc19/metadata/targets.json` - the certificate is located in the structure `.signed.delegations.keys` with the key value of `public`.
 
-	For example, use the command `cat ~/.docker/trust/tuf/$DTR_URL/ci/dc18/metadata/targets.json | jq '.signed.delegations.keys' | grep public` to extract the certificate.
+	For example, use the command `cat ~/.docker/trust/tuf/$DTR_URL/ci/dc19/metadata/targets.json | jq '.signed.delegations.keys' | grep public` to extract the certificate.
 
 ## <a name="task9"></a>Task 9: Automate with Jenkins
 In order to automate we need to deploy Jenkins. If you want I can point you to a few Docker Compose yamls. OR we have the easy way. The easy, aka script, deploys Jenkins quickly.
@@ -524,22 +529,22 @@ In order to automate we need to deploy Jenkins. If you want I can point you to a
 
 1.  Take a look at the script. Also notice the script will check variables, and then runs `docker run`.
 
-	```
-	cat ./dc18_supply_chain/scripts/jenkins.sh
+	```bash
+	cat ./dc19_supply_chain/scripts/jenkins.sh
 	```
 
 2.  Then run unset Docker Content Trust and instal Jenkins.
 
-	```
+	```bash
     export DOCKER_CONTENT_TRUST=0
-	./dc18_supply_chain/scripts/jenkins.sh
+	./dc19_supply_chain/scripts/jenkins.sh
 	```
 
 3.  Pay attention to the url AND Jenkins password. It will look like :
 
-	```
+	```bash
 	[worker3] (local) root@10.20.0.25 ~/
-	$ dc18_supply_chain/scripts/jenkins.sh
+	$ dc19_supply_chain/scripts/jenkins.sh
 	=========================================================================================================
 
 	  Jenkins URL : http://ip172-18-0-20-bcelih5dffhg00b2thog.direct.ee-beta2.play-with-docker.com:8080
@@ -582,7 +587,7 @@ Now that we have Jenkins setup and running we need to add 3 additional plugins -
 3. Click on `New item` in the upper left.
 	![](img/jenkins_newitem.jpg)
 
-4. Enter a name like `ci_dc18`, click `Freestyle project` and then click `OK`.
+4. Enter a name like `ci_dc19`, click `Freestyle project` and then click `OK`.
 	![](img/jenkins_item.jpg)
 
 5. Let's scroll down to the `Build` section. We will come back to the `Build Triggers` section in a bit. Now click `Add build step` --> `Execute shell`.
@@ -592,19 +597,19 @@ Now that we have Jenkins setup and running we need to add 3 additional plugins -
 
 	**Please replace the <DTR_URL> with your URL! `echo $DTR_URL` <-- `worker3`**
 
-	```
+	```bash
 	DTR_USERNAME=admin
 	DTR_URL=<DTR_URL>
 
 	docker login -u admin -p admin1234 $DTR_URL
 
-	docker pull clemenko/dc18:0.2
+	docker pull clemenko/dc19:0.2
 
-	docker tag clemenko/dc18:0.2 $DTR_URL/ci/dc18_build:jenkins_$BUILD_NUMBER
+	docker tag clemenko/dc19:0.2 $DTR_URL/ci/dc19_build:jenkins_$BUILD_NUMBER
 
-	docker push $DTR_URL/ci/dc18_build:jenkins_$BUILD_NUMBER
+	docker push $DTR_URL/ci/dc19_build:jenkins_$BUILD_NUMBER
 
-	docker rmi clemenko/dc18:0.1 clemenko/dc18:0.2 $DTR_URL/ci/dc18_build:jenkins_$BUILD_NUMBER
+	docker rmi clemenko/dc19:0.1 clemenko/dc19:0.2 $DTR_URL/ci/dc19_build:jenkins_$BUILD_NUMBER
 	```
 
 	It will look very similar to:
@@ -621,21 +626,21 @@ Now that we have Jenkins setup and running we need to add 3 additional plugins -
 9. The console output will show you all the details from the script execution.
 	![](img/jenkins_output.jpg)
 
-10. Review the `ci`/`dc18` repository in DTR. You should now see a bunch of tags that have been promoted.
+10. Review the `ci`/`dc19` repository in DTR. You should now see a bunch of tags that have been promoted.
 	![](img/automated_supply.jpg)
 
 ### <a name="task9.3"></a>Task 9.3: Webhooks
 Now that we have Jenkins setup we can extend with webhooks. In Jenkins speak a webhook is simply a build trigger. Let's configure one.
 
-1. Navigate to Jenkins and click on the project/item called `ci_dc18` and click on `Configure` on the left hand side.
+1. Navigate to Jenkins and click on the project/item called `ci_dc19` and click on `Configure` on the left hand side.
 	![](img/jenkins_configure.jpg)
 
-2. Then scroll down to `Build Triggers`. Check the checkbox for `Generic Webhook Trigger` and enter a Token of `dc18_rocks`.  Scroll down and click `Save`.
+2. Then scroll down to `Build Triggers`. Check the checkbox for `Generic Webhook Trigger` and enter a Token of `dc19_rocks`.  Scroll down and click `Save`.
 	![](img/jenkins_triggers.jpg)
 
-3. Now in your browser goto YOUR `http://$DOCS_URL:8080/generic-webhook-trigger/invoke?token=dc18_rocks`
+3. Now in your browser goto YOUR `http://$DOCS_URL:8080/generic-webhook-trigger/invoke?token=dc19_rocks`
 
-	It should look like: `http://ip172-18-0-6-bcg2h0npobfg00c4nrb0.direct.ee-beta2.play-with-docker.com:8080/generic-webhook-trigger/invoke?token=dc18_rocks`
+	It should look like: `http://ip172-18-0-6-bcg2h0npobfg00c4nrb0.direct.ee-beta2.play-with-docker.com:8080/generic-webhook-trigger/invoke?token=dc19_rocks`
 
 
 ## <a name="task10"></a>Task 10: Optional Jenkins Pipeline, DTR WebHook and Content Trust
@@ -658,14 +663,14 @@ As we are now looking to sign images from our Jenkins instance we need access to
 
 3. In the console do:
 
-	```
+	```bash
 	cd ~/.docker/trust/private
 	find . -type f -print -exec cat {} \;
 	```
 
-	Identify the file that contains the signing key used for the repository `ci/dc18` - it should have the text `role: jenkins` in it. Copy and paste the contents into a file on your laptop (this is needed so we can upload to Jenkins in the next steps). The complete file should look something like this:
+	Identify the file that contains the signing key used for the repository `ci/dc19` - it should have the text `role: jenkins` in it. Copy and paste the contents into a file on your laptop (this is needed so we can upload to Jenkins in the next steps). The complete file should look something like this:
 
-	```
+	```bash
 	-----BEGIN ENCRYPTED PRIVATE KEY-----
 	role: jenkins
 
@@ -691,9 +696,9 @@ As we are now looking to sign images from our Jenkins instance we need access to
 8. Press the `OK` button.
 
 ### <a name="task10.1"></a>Task 10.2: Create Pipeline Jobs
-1. From the Jenkins homepage Create a new Pipeline job called `ci_dc18_pipeline`. Copy and paste the below pipeline script into the Pipeline Script window at the end of the job:
+1. From the Jenkins homepage Create a new Pipeline job called `ci_dc19_pipeline`. Copy and paste the below pipeline script into the Pipeline Script window at the end of the job:
 
-	```
+	```bash
 	pipeline {
 	    agent any
 
@@ -718,7 +723,7 @@ As we are now looking to sign images from our Jenkins instance we need access to
 	            steps {
 	                sh """
 	                    docker pull alpine
-	                    docker tag alpine ${DTR_DOMAIN}/ci/dc18_build:alpine_jenkins_${env.BUILD_NUMBER}
+	                    docker tag alpine ${DTR_DOMAIN}/ci/dc19_build:alpine_jenkins_${env.BUILD_NUMBER}
 	                    docker images
 	                """
 	            }
@@ -727,8 +732,8 @@ As we are now looking to sign images from our Jenkins instance we need access to
 	        stage ('Push image to DTR') {
 	            steps {
 	                sh """
-	                    docker image push ${DTR_DOMAIN}/ci/dc18_build:alpine_jenkins_${env.BUILD_NUMBER}
-	                    docker image rm ${DTR_DOMAIN}/ci/dc18_build:alpine_jenkins_${env.BUILD_NUMBER}
+	                    docker image push ${DTR_DOMAIN}/ci/dc19_build:alpine_jenkins_${env.BUILD_NUMBER}
+	                    docker image rm ${DTR_DOMAIN}/ci/dc19_build:alpine_jenkins_${env.BUILD_NUMBER}
 	                """
 	            }
 	        }
@@ -738,7 +743,7 @@ As we are now looking to sign images from our Jenkins instance we need access to
 
 	**Remember to change the value for <DTR_DOMAIN> to your DTR Domain value. Save the job.**
 
-2. Create a new Pipeline job called `ci_dc18_pipeline_sign`. Under the `Build Triggers` section check the box next to `Generic Webhook Trigger` which will enable you to enter some details about the trigger.
+2. Create a new Pipeline job called `ci_dc19_pipeline_sign`. Under the `Build Triggers` section check the box next to `Generic Webhook Trigger` which will enable you to enter some details about the trigger.
 
 	In the `Post content parameters` section set the `Variable` value to `requestPayload`, set the `Expression` value to `$` and select the radio button for `JSONPath`.
 
@@ -748,7 +753,7 @@ As we are now looking to sign images from our Jenkins instance we need access to
 
 	Copy and paste the below pipeline script into the Pipeline Script window at the end of the job.
 
-	```
+	```bash
 	def payload = new groovy.json.JsonSlurperClassic().parseText(requestPayload)
 	def skipRemainingStages = false
 
@@ -869,12 +874,12 @@ As we are now looking to sign images from our Jenkins instance we need access to
 
 	**Remember to change the value for <DTR_DOMAIN> to your DTR Domain value.**
 
-3. In the pipeline job `ci_dc18_pipeline_sign` we are making use of the `JsonSlurperClassic` object which requires a script approval. Therefore we need to run this pipeline job outside of the `Groovy Sandbox`. Make sure to uncheck the box `Use Groovy Sandbox` below the Pipeline Script window. Save the job
+3. In the pipeline job `ci_dc19_pipeline_sign` we are making use of the `JsonSlurperClassic` object which requires a script approval. Therefore we need to run this pipeline job outside of the `Groovy Sandbox`. Make sure to uncheck the box `Use Groovy Sandbox` below the Pipeline Script window. Save the job
 
 ### <a name="task10.3"></a>Task 10.3: Create DTR WebHook
 Now that we have our Jeknins pipeline jobs created we need to create a webhook in DTR so that we can trigger the signing job after the image has been promoted.
 
-1. Navigate to DTR --> `Repostories` --> `ci/dc18_build` --> `Webhooks`.
+1. Navigate to DTR --> `Repostories` --> `ci/dc19_build` --> `Webhooks`.
 
 2. Click on the `New Webhook` button.
 
@@ -887,7 +892,7 @@ Now that we have our Jeknins pipeline jobs created we need to create a webhook i
 5. Press the `Create` button
 
 ### <a name="task10.4"></a>Task 10.4: Run the jobs!
-Now all the Jenkins and DTR setup has been done you can manually run the Jenkins job `ci_dc18_pipeline`. This will cause the alpine image to be retagged and pushed to DTR. DTR will then scan the image and if there are 0 critical vulnerabilities it will promote the image into `ci/dc18`. The webhook will then trigger and the 2nd Jenkins job `ci_dc18_pipeline_sign` will start which will retag the image and then use the `docker trust` command to sign the image and push it back into DTR.
+Now all the Jenkins and DTR setup has been done you can manually run the Jenkins job `ci_dc19_pipeline`. This will cause the alpine image to be retagged and pushed to DTR. DTR will then scan the image and if there are 0 critical vulnerabilities it will promote the image into `ci/dc19`. The webhook will then trigger and the 2nd Jenkins job `ci_dc19_pipeline_sign` will start which will retag the image and then use the `docker trust` command to sign the image and push it back into DTR.
 
 ## <a name="Conclusion"></a>Conclusion
 In this workshop we were able to start deploying the basics of an Automated Secure Supply Chain. Hopefully with this foundation you can build your own organizations Secure Supply Chain!

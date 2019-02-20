@@ -1,7 +1,7 @@
 version: "3.4"
 services:
   app:
-    image: clemenko/dc18:0.2
+    image: clemenko/dc19:0.2
     deploy:
       replicas: 6
       mode: replicated
