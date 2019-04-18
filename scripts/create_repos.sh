@@ -12,7 +12,7 @@ curl -X POST -k -L \
   -H 'Content-Type: application/json' \
   -d '{
   "enableManifestLists": false,
-  "immutableTags": true,
+  "immutableTags": false,
   "longDescription": "",
   "name": "dc19",
   "scanOnPush": true,
