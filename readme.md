@@ -99,7 +99,7 @@ This workshop is designed to demonstrate the power of Docker Secrets, Image Prom
 
 ## <a name="task 1"></a>Task 1: Accessing PWD
 
-1. Navigate in your web browser to the URL the workshop organizer provided to you.
+1. Navigate in your web browser to the URL the workshop organizer provided to you. **Chrome is advised!**
 
 2. Fill out the form, and click `submit`. You will then be redirected to the PWD environment. It may take a minute or so to provision out your PWD environment.
 
@@ -308,7 +308,6 @@ In order to push and pull images to DTR we will need to take advantage of PWD's 
 	```bash
 	docker pull clemenko/dc19:0.1
 	docker pull clemenko/dc19:0.2
-	docker pull clemenko/dc19:0.3
 	docker pull alpine
 	```
 
@@ -319,7 +318,6 @@ In order to push and pull images to DTR we will need to take advantage of PWD's 
 	```bash
 	docker tag clemenko/dc19:0.1 $DTR_URL/ci/dc19_build:0.1
 	docker tag clemenko/dc19:0.2 $DTR_URL/ci/dc19_build:0.2
-	docker tag clemenko/dc19:0.3 $DTR_URL/ci/dc19_build:0.3
 	docker tag alpine $DTR_URL/ci/dc19_build:alpine
 	```
 
@@ -328,7 +326,6 @@ In order to push and pull images to DTR we will need to take advantage of PWD's 
 	```bash
 	docker push $DTR_URL/ci/dc19_build:0.1
 	docker push $DTR_URL/ci/dc19_build:0.2
-	docker push $DTR_URL/ci/dc19_build:0.3
 	docker push $DTR_URL/ci/dc19_build:alpine
 	```
 
