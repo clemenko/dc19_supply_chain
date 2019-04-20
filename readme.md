@@ -396,7 +396,7 @@ Docker Content Trust/Notary provides a cryptographic signature for each image. T
 
 We can create policy enforcement within Universal Control Plane (UCP) such that **ONLY** signed images from the `ci` team will be allowed to run. Since this workshop is about DTR and Secure Supply Chain we will skip that step.
 
-Let's sign our first Docker image?
+Let's sign your first Docker image?
 
 1. Right now you should have a promoted image `$DTR_URL/ci/dc19:0.2`. We need to tag it with a new `signed` tag.
 
