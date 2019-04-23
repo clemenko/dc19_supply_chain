@@ -55,7 +55,7 @@ The following abbreviations are used in this document:
 * PWD = Play With Docker
 
 ## <a name="prerequisites"></a>Prerequisites
-This lab requires an instance of Docker Enterprise Edition (EE). Docker Enterprise Edition includes Docker Universal Control Plane and Docker Trusted Registry. This lab provides Docker EE.
+This lab requires an instance of Docker Enterprise Edition (EE). Docker Enterprise Edition includes Docker Universal Control Plane and Docker Trusted Registry. This lab provides Docker Enterprise.
 
 ## Understanding the Play With Docker Interface
 
@@ -69,10 +69,10 @@ There are three main components to the Play With Docker (PWD) interface.
 
 ### 1. Console Access
 
-Play with Docker provides access to the 3 Docker EE hosts in your Cluster. These machines are:
+Play with Docker provides access to the 3 Docker Enterprise hosts in your Cluster. These machines are:
 
-* A Linux-based Docker EE 2.1 (UCP 3.1.6 & DTR 2.6.5 & 18.09.2)  Manager node
-* Three Linux-based Docker EE 2.1 (18.09.2) Worker nodes
+* A Linux-based Docker Enterprise 2.1 (UCP 3.1.6 & DTR 2.6.5 & 18.09.2)  Manager node
+* Three Linux-based Docker Enterprise 2.1 (18.09.2) Worker nodes
 
 By clicking a name on the left, the console window will be connected to that node.
 
@@ -124,7 +124,7 @@ Before we create the repositories, let's start with enabling the Docker Image Sc
 
 1. From the main PWD screen click the `DTR` button on the left side of the screen
 
-	> **Note**: Because this is a lab-based install of Docker EE we are using the default self-signed certs. Because of this your browser may display a security warning. It is safe to click through this warning.
+	> **Note**: Because this is a lab-based install of Docker Enterprise we are using the default self-signed certs. Because of this your browser may display a security warning. It is safe to click through this warning.
 	>
 	> In a production environment you would use certs from a trusted certificate authority and would not see this screen.
 	>
@@ -332,7 +332,7 @@ Lets take a good look at the scan results from the images. Please keep in mind t
 
 1. Navigate to DTR --> `Repostories` --> `ci/dc19_build` --> `Tags`.
 
-	Do worry if you see images in a `Scanning...` or `Pending` state. Please click to another tab and click back.
+	Don't worry if you see images in a `Scanning...` or `Pending` state. Please click to another tab and click back.
 
     ![list](img/image_list.jpg)
 
@@ -392,7 +392,7 @@ Since we already had an image that had the tag `promoted` we should see that the
 
 ## <a name="task8"></a>Task 8: Docker Content Trust / Image Signing
 
-Docker Content Trust/Notary provides a cryptographic signature for each image. The signature provides security so that the image requested is the image you get. Read [Notary's Architecture](https://docs.docker.com/notary/service_architecture/) to learn more about how Notary is secure. Since Docker EE is "Secure by Default," Docker Trusted Registry comes with the Notary server out of the box.
+Docker Content Trust/Notary provides a cryptographic signature for each image. The signature provides security so that the image requested is the image you get. Read [Notary's Architecture](https://docs.docker.com/notary/service_architecture/) to learn more about how Notary is secure. Since Docker Enterprise is "Secure by Default," Docker Trusted Registry comes with the Notary server out of the box.
 
 We can create policy enforcement within Universal Control Plane (UCP) such that **ONLY** signed images from the `ci` team will be allowed to run. Since this workshop is about DTR and Secure Supply Chain we will skip that step.
 
