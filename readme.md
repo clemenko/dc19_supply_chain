@@ -16,7 +16,7 @@ In this lab you will integrate Docker Enterpise Edition Advanced in to your deve
 
 > **Tasks**:
 >
-> * [Prerequisites](#prerequisites)
+> * [Prerequisites](#Prerequisites)
 > * [Introduction](#introduction)
 > * [Task 1: Accessing PWD](#task1)
 >   * [Task 1.1: Set Up Environment Variables](#task1.1)
@@ -25,7 +25,7 @@ In this lab you will integrate Docker Enterpise Edition Advanced in to your deve
 >   * [Task 3.1: Create Jenkins Organization](#task3.1)
 >   * [Task 3.2: Create Jenkins User](#task3.2)
 >   * [Task 3.3: Create Jenkins DTR Token](#task3.3)
-> * [Task 4: Create DTR Repository](#task4)
+> * [Task 4: Create DTR Repositories](#task4)
 >   * [Task 4.1: Create Promotion Policy (Private to Public)](#task4.1)
 > * [Task 5: Pull / Tag / Push Docker Image](#task5)
 > * [Task 6: Review Scan Results](#task6)
@@ -43,7 +43,9 @@ In this lab you will integrate Docker Enterpise Edition Advanced in to your deve
 When you encounter a phrase in between `<` and `>`  you are meant to substitute in a different value.
 We are going to leverage the power of [Play With Docker](http://play-with-docker.com).
 
-## <a name="abbreviations"></a>Abbreviations
+## Abbreviations
+
+<a name="abbreviations"></a>
 
 The following abbreviations are used in this document:
 
@@ -54,7 +56,8 @@ The following abbreviations are used in this document:
 * CVE = Common Vulnerabilities and Exposures
 * PWD = Play With Docker
 
-## <a name="prerequisites"></a>Prerequisites
+## Prerequisites
+
 This lab requires an instance of Docker Enterprise Edition (EE). Docker Enterprise Edition includes Docker Universal Control Plane and Docker Trusted Registry. This lab provides Docker Enterprise.
 
 ## Understanding the Play With Docker Interface
@@ -190,7 +193,9 @@ Lets add it to the `worker3` environment. Replace `<TOKEN>` with the token from 
 export DTR_TOKEN=<TOKEN>
 ```
 
-## <a name="task4"></a>Task 4: Create DTR Repository
+## Task 4: Create DTR Repositories
+
+<a name="task4"></a>
 
 We now need to access Docker Trusted Registry to setup two repositories.
 
