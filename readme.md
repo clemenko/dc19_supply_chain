@@ -20,7 +20,7 @@
 * 11. [Task 5: Pull / Tag / Push Docker Image](#Task5:PullTagPushDockerImage)
 * 12. [Task 6: Review Scan Results](#Task6:ReviewScanResults)
 	* 12.1. [Task 6.1: Hide Vulnerabilities](#Task6.1:HideVulnerabilities)
-* 13. [Task 7: Extend with Image Mirroring](#Task7:ExtendwithImageMirroring)
+* 13. [Task 7: Extend with Image Mirroring](#Task7%20%3AExtend%20with%20Image%20Mirroring)
 * 14. [Task 8: Docker Content Trust / Image Signing](#Task8:DockerContentTrustImageSigning)
 * 15. [Task 9: Automate with Jenkins](#Task9:AutomatewithJenkins)
 	* 15.1. [Task 9.1: Deploy Jenkins](#Task9.1:DeployJenkins)
