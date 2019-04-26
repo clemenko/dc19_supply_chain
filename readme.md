@@ -45,9 +45,35 @@ In this lab you will integrate Docker Enterpise Edition Advanced in to your deve
 > - [Conclusion](#conclusion)
 
 
-<!-- TOC -->autoauto- [Secure, Automated Software Supply Chain - Dockercon 2019](#secure-automated-software-supply-chain---dockercon-2019)auto    - [Who am i](#who-am-i)auto    - [Document conventions](#document-conventions)auto    - [Abbreviations](#abbreviations)auto    - [Prerequisites](#prerequisites)auto    - [Understanding the Play With Docker Interface](#understanding-the-play-with-docker-interface)auto        - [1. Console Access](#1-console-access)auto        - [2. Access to your Universal Control Plane (UCP) and Docker Trusted Registry (DTR) servers](#2-access-to-your-universal-control-plane-ucp-and-docker-trusted-registry-dtr-servers)auto        - [3. Session Information](#3-session-information)auto    - [Introduction](#introduction)auto    - [Task 1 Accessing PWD](#task-1-accessing-pwd)auto        - [Task 1.1: Set Up Environment Variables](#task-11-set-up-environment-variables)auto    - [Task 2 Enable Docker Image Scanning](#task-2-enable-docker-image-scanning)auto    - [Task 3 Create Jenkins User and Organization](#task-3-create-jenkins-user-and-organization)auto        - [Task 3.1 Create Jenkins Organization](#task-31-create-jenkins-organization)auto        - [Task 3.2 Create Jenkins User](#task-32-create-jenkins-user)auto        - [Task 3.3 Create Jenkins DTR Token](#task-33-create-jenkins-dtr-token)auto    - [Task 4: Create DTR Repositories](#task-4-create-dtr-repositories)auto        - [Task 4.1: Create Promotion Policy - Private to Public](#task-41-create-promotion-policy---private-to-public)auto    - [Task 5: Pull / Tag / Push Docker Image](#task-5-pull--tag--push-docker-image)auto    - [Task 6: Review Scan Results](#task-6-review-scan-results)auto        - [Task 6.1: Hide Vulnerabilities](#task-61-hide-vulnerabilities)auto    - [Task 7: Extend with Image Mirroring](#task-7-extend-with-image-mirroring)auto    - [Task 8: Docker Content Trust / Image Signing](#task-8-docker-content-trust--image-signing)auto    - [Task 9: Automate with Jenkins](#task-9-automate-with-jenkins)auto        - [Task 9.1: Deploy Jenkins](#task-91-deploy-jenkins)auto        - [Task 9.2: Plumb Jenkins](#task-92-plumb-jenkins)auto        - [Task 9.3: Webhooks](#task-93-webhooks)auto    - [Conclusion](#conclusion)autoauto<!-- /TOC -->
-
-
+   * [Secure, Automated Software Supply Chain - Dockercon 2019](#secure-automated-software-supply-chain---dockercon-2019)
+      * [Who am i](#who-am-i)
+      * [Document conventions](#document-conventions)
+      * [Abbreviations](#abbreviations)
+      * [Prerequisites](#prerequisites)
+      * [Understanding the Play With Docker Interface](#understanding-the-play-with-docker-interface)
+         * [1. Console Access](#1-console-access)
+         * [2. Access to your Universal Control Plane (UCP) and Docker Trusted Registry (DTR) servers](#2-access-to-your-universal-control-plane-ucp-and-docker-trusted-registry-dtr-servers)
+         * [3. Session Information](#3-session-information)
+      * [Introduction](#introduction)
+      * [Task 1 Accessing PWD](#task-1-accessing-pwd)
+         * [Task 1.1: Set Up Environment Variables](#task-11-set-up-environment-variables)
+      * [Task 2 Enable Docker Image Scanning](#task-2-enable-docker-image-scanning)
+      * [Task 3 Create Jenkins User and Organization](#task-3-create-jenkins-user-and-organization)
+         * [Task 3.1 Create Jenkins Organization](#task-31-create-jenkins-organization)
+         * [Task 3.2 Create Jenkins User](#task-32-create-jenkins-user)
+         * [Task 3.3 Create Jenkins DTR Token](#task-33-create-jenkins-dtr-token)
+      * [Task 4: Create DTR Repositories](#task-4-create-dtr-repositories)
+         * [Task 4.1: Create Promotion Policy - Private to Public](#task-41-create-promotion-policy---private-to-public)
+      * [Task 5: Pull / Tag / Push Docker Image](#task-5-pull--tag--push-docker-image)
+      * [Task 6: Review Scan Results](#task-6-review-scan-results)
+         * [Task 6.1: Hide Vulnerabilities](#task-61-hide-vulnerabilities)
+      * [Task 7: Extend with Image Mirroring](#task-7-extend-with-image-mirroring)
+      * [Task 8: Docker Content Trust / Image Signing](#task-8-docker-content-trust--image-signing)
+      * [Task 9: Automate with Jenkins](#task-9-automate-with-jenkins)
+         * [Task 9.1: Deploy Jenkins](#task-91-deploy-jenkins)
+         * [Task 9.2: Plumb Jenkins](#task-92-plumb-jenkins)
+         * [Task 9.3: Webhooks](#task-93-webhooks)
+      * [Conclusion](#conclusion)
 ## Document conventions
 
 When you encounter a phrase in between `<` and `>`  you are meant to substitute in a different value.
