@@ -1,40 +1,6 @@
-<!-- vscode-markdown-toc -->
-* 1. [Who am i](#Whoami)
-* 2. [Document conventions](#Documentconventions)
-* 3. [Abbreviations](#Abbreviations)
-* 4. [Prerequisites](#Prerequisites)
-* 5. [Understanding the Play With Docker Interface](#UnderstandingthePlayWithDockerInterface)
-	* 5.1. [1. Console Access](#ConsoleAccess)
-	* 5.2. [2. Access to your Universal Control Plane (UCP) and Docker Trusted Registry (DTR) servers](#AccesstoyourUniversalControlPlaneUCPandDockerTrustedRegistryDTRservers)
-	* 5.3. [3. Session Information](#SessionInformation)
-* 6. [Introduction](#Introduction)
-* 7. [Task 1: Accessing PWD](#Task1:AccessingPWD)
-	* 7.1. [Task 1.1: Set Up Environment Variables](#Task1.1:SetUpEnvironmentVariables)
-* 8. [Task 2: Enable Docker Image Scanning](#Task2:EnableDockerImageScanning)
-* 9. [Task 3: Create Jenkins User and Organization](#Task3:CreateJenkinsUserandOrganization)
-	* 9.1. [Task 3.1: Create Jenkins Organization](#Task3.1:CreateJenkinsOrganization)
-	* 9.2. [Task 3.2: Create Jenkins User](#Task3.2:CreateJenkinsUser)
-	* 9.3. [Task 3.3: Create Jenkins DTR Token](#Task3.3:CreateJenkinsDTRToken)
-* 10. [Task 4: Create DTR Repositories](#Task4:CreateDTRRepositories)
-	* 10.1. [Task 4.1: Create Promotion Policy - Private to Public](#Task4.1:CreatePromotionPolicy-PrivatetoPublic)
-* 11. [Task 5: Pull / Tag / Push Docker Image](#Task5:PullTagPushDockerImage)
-* 12. [Task 6: Review Scan Results](#Task6:ReviewScanResults)
-	* 12.1. [Task 6.1: Hide Vulnerabilities](#Task6.1:HideVulnerabilities)
-* 13. [Task 7: Extend with Image Mirroring](#Task7%20%3AExtend%20with%20Image%20Mirroring)
-* 14. [Task 8: Docker Content Trust / Image Signing](#Task8:DockerContentTrustImageSigning)
-* 15. [Task 9: Automate with Jenkins](#Task9:AutomatewithJenkins)
-	* 15.1. [Task 9.1: Deploy Jenkins](#Task9.1:DeployJenkins)
-	* 15.2. [Task 9.2: Plumb Jenkins](#Task9.2:PlumbJenkins)
-	* 15.3. [Task 9.3: Webhooks](#Task9.3:Webhooks)
-* 16. [Conclusion](#Conclusion)
+# Secure, Automated Software Supply Chain - Dockercon 2019
 
-<!-- vscode-markdown-toc-config
-	numbering=true
-	autoSave=true
-	/vscode-markdown-toc-config -->
-<!-- /vscode-markdown-toc --># Secure, Automated Software Supply Chain - Dockercon 2019
-
-##  1. <a name='Whoami'></a>Who am i
+## Who am i
 
 * Github : [https://github.com/clemenko](https://github.com/clemenko)
 * Twitter : [@clemenko](https://twitter.com/clemenko)
@@ -79,14 +45,15 @@ In this lab you will integrate Docker Enterpise Edition Advanced in to your deve
 > - [Conclusion](#conclusion)
 
 
+<!-- TOC -->autoauto- [Secure, Automated Software Supply Chain - Dockercon 2019](#secure-automated-software-supply-chain---dockercon-2019)auto    - [Who am i](#who-am-i)auto    - [Document conventions](#document-conventions)auto    - [Abbreviations](#abbreviations)auto    - [Prerequisites](#prerequisites)auto    - [Understanding the Play With Docker Interface](#understanding-the-play-with-docker-interface)auto        - [1. Console Access](#1-console-access)auto        - [2. Access to your Universal Control Plane (UCP) and Docker Trusted Registry (DTR) servers](#2-access-to-your-universal-control-plane-ucp-and-docker-trusted-registry-dtr-servers)auto        - [3. Session Information](#3-session-information)auto    - [Introduction](#introduction)auto    - [Task 1 Accessing PWD](#task-1-accessing-pwd)auto        - [Task 1.1: Set Up Environment Variables](#task-11-set-up-environment-variables)auto    - [Task 2 Enable Docker Image Scanning](#task-2-enable-docker-image-scanning)auto    - [Task 3 Create Jenkins User and Organization](#task-3-create-jenkins-user-and-organization)auto        - [Task 3.1 Create Jenkins Organization](#task-31-create-jenkins-organization)auto        - [Task 3.2 Create Jenkins User](#task-32-create-jenkins-user)auto        - [Task 3.3 Create Jenkins DTR Token](#task-33-create-jenkins-dtr-token)auto    - [Task 4: Create DTR Repositories](#task-4-create-dtr-repositories)auto        - [Task 4.1: Create Promotion Policy - Private to Public](#task-41-create-promotion-policy---private-to-public)auto    - [Task 5: Pull / Tag / Push Docker Image](#task-5-pull--tag--push-docker-image)auto    - [Task 6: Review Scan Results](#task-6-review-scan-results)auto        - [Task 6.1: Hide Vulnerabilities](#task-61-hide-vulnerabilities)auto    - [Task 7: Extend with Image Mirroring](#task-7-extend-with-image-mirroring)auto    - [Task 8: Docker Content Trust / Image Signing](#task-8-docker-content-trust--image-signing)auto    - [Task 9: Automate with Jenkins](#task-9-automate-with-jenkins)auto        - [Task 9.1: Deploy Jenkins](#task-91-deploy-jenkins)auto        - [Task 9.2: Plumb Jenkins](#task-92-plumb-jenkins)auto        - [Task 9.3: Webhooks](#task-93-webhooks)auto    - [Conclusion](#conclusion)autoauto<!-- /TOC -->
 
 
-##  2. <a name='Documentconventions'></a>Document conventions
+## Document conventions
 
 When you encounter a phrase in between `<` and `>`  you are meant to substitute in a different value.
 We are going to leverage the power of [Play With Docker](http://play-with-docker.com).
 
-##  3. <a name='Abbreviations'></a>Abbreviations
+## Abbreviations
 
 The following abbreviations are used in this document:
 
@@ -97,11 +64,11 @@ The following abbreviations are used in this document:
 * CVE = Common Vulnerabilities and Exposures
 * PWD = Play With Docker
 
-##  4. <a name='Prerequisites'></a>Prerequisites
+## Prerequisites
 
 This lab requires an instance of Docker Enterprise Edition (EE). Docker Enterprise Edition includes Docker Universal Control Plane and Docker Trusted Registry. This lab provides Docker Enterprise.
 
-##  5. <a name='UnderstandingthePlayWithDockerInterface'></a>Understanding the Play With Docker Interface
+## Understanding the Play With Docker Interface
 
 ![pwd screen](./img/pwd_screen.jpg)
 
@@ -111,7 +78,7 @@ If none of these apply to you, contact your local [Docker Meetup Chapter](https:
 
 There are three main components to the Play With Docker (PWD) interface.
 
-###  5.1. <a name='ConsoleAccess'></a>1. Console Access
+### 1. Console Access
 
 Play with Docker provides access to the 3 Docker Enterprise hosts in your Cluster. These machines are:
 
@@ -120,28 +87,28 @@ Play with Docker provides access to the 3 Docker Enterprise hosts in your Cluste
 
 By clicking a name on the left, the console window will be connected to that node.
 
-###  5.2. <a name='AccesstoyourUniversalControlPlaneUCPandDockerTrustedRegistryDTRservers'></a>2. Access to your Universal Control Plane (UCP) and Docker Trusted Registry (DTR) servers
+### 2. Access to your Universal Control Plane (UCP) and Docker Trusted Registry (DTR) servers
 
 Additionally, the PWD screen provides you with a one-click access to the Universal Control Plane (UCP)
 web-based management interface as well as the Docker Trusted Registry (DTR) web-based management interface. Clicking on either the `UCP` or `DTR` button will bring up the respective server web interface in a new tab.
 
-###  5.3. <a name='SessionInformation'></a>3. Session Information
+### 3. Session Information
 
 Throughout the lab you will be asked to provide either hostnames or login credentials that are unique to your environment. These are displayed for you at the bottom of the screen.
 
 **Note:**  There are a limited number of lab connections available for the day. You can use the same session all day by simply keeping your browser connection to the PWD environment open between sessions. This will help us get as many people connected as possible, and prevent you needing to get new credentials and hostnames in every lab. However, if you do lose your connection between sessions simply go to the PWD URL again and you will be given a new session.
 
-##  6. <a name='Introduction'></a>Introduction
+## Introduction
 
 This workshop is designed to demonstrate the power of Docker Secrets, Image Promotion, Scanning Engine, and Content Trust. We will walk through creating a few secrets. Deploying a stack that uses the secret. Then we will create a Docker Trusted Registry repository where we can create a promotion policy. The promotion policy leverages the output from Image Scanning result. This is the foundation of creating a Secure Supply Chain. You can read more about  secure supply chains for our [Secure Supply Chain reference architecture](https://success.docker.com/article/secure-supply-chain).
 
-##  7. <a name='Task1:AccessingPWD'></a>Task 1: Accessing PWD
+## Task 1 Accessing PWD
 
 1. Navigate in your web browser to the URL the workshop organizer provided to you. **Chrome is advised!**
 
 2. Fill out the form, and click `submit`. You will then be redirected to the PWD environment. It may take a minute or so to provision out your PWD environment.
 
-###  7.1. <a name='Task1.1:SetUpEnvironmentVariables'></a>Task 1.1: Set Up Environment Variables
+### Task 1.1: Set Up Environment Variables
 
 We are going to use `worker3` for **ALL** our command line work. Click on `worker3` to activate the shell.
 
@@ -162,7 +129,7 @@ Once cloned, now we can run the `var_setup.sh` script.
 Now your PWD environment variables are setup. We will use the variables for some scripting.
 
 
-##  8. <a name='Task2:EnableDockerImageScanning'></a>Task 2: Enable Docker Image Scanning
+## Task 2 Enable Docker Image Scanning
 
 Before we create the repositories, let's start with enabling the Docker Image Scanning engine.
 
@@ -180,11 +147,11 @@ Before we create the repositories, let's start with enabling the Docker Image Sc
 3. Select `Enable Scanning`. Leave it in `Online` mode and select `Enable`. Press the button `Enable Online Scanning`. The CVE database will start downloading. This can take a few minutes. Please be patient for it to complete.
 ![enable_scan](img/scanning_enable.jpg)
 
-##  9. <a name='Task3:CreateJenkinsUserandOrganization'></a>Task 3: Create Jenkins User and Organization
+## Task 3 Create Jenkins User and Organization
 
 In order to setup our automation we need to create an organization and a user account for Jenkins. We are going to create a user named `jenkins` in the organization `ci`.
 
-###  9.1. <a name='Task3.1:CreateJenkinsOrganization'></a>Task 3.1: Create Jenkins Organization
+### Task 3.1 Create Jenkins Organization
 
 1. From the `PWD` main page click on `DTR`.
 	![orgs](img/orgs_1.jpg)
@@ -198,7 +165,7 @@ Now we should see the organization named `ci`.
 
 ![new_org2](img/orgs_2.jpg)
 
-###  9.2. <a name='Task3.2:CreateJenkinsUser'></a>Task 3.2: Create Jenkins User
+### Task 3.2 Create Jenkins User
 
 While remaining in DTR we can create the user from here.
 
@@ -212,7 +179,7 @@ Now change the permissions for the `jenkins` account to `Org Owner`.
 
 ![admin](img/org_admin.jpg)
 
-###  9.3. <a name='Task3.3:CreateJenkinsDTRToken'></a>Task 3.3: Create Jenkins DTR Token
+### Task 3.3 Create Jenkins DTR Token
 
 Now that we have the `jenkins` user created we need to add a token for use with DTR's API.
 
@@ -234,7 +201,7 @@ Lets add it to the `worker3` environment. Replace `<TOKEN>` with the token from 
 export DTR_TOKEN=<TOKEN>
 ```
 
-##  10. <a name='Task4:CreateDTRRepositories'></a>Task 4: Create DTR Repositories
+## Task 4: Create DTR Repositories
 
 We now need to access Docker Trusted Registry to setup two repositories.
 
@@ -304,7 +271,7 @@ curl -X POST -k -L \
 5. We should have two repositories now.
 	![new_repo](img/repo_list.jpg)
 
-###  10.1. <a name='Task4.1:CreatePromotionPolicy-PrivatetoPublic'></a>Task 4.1: Create Promotion Policy - Private to Public
+### Task 4.1: Create Promotion Policy - Private to Public
 
 With the two repositories setup we can now define the promotion policy. The first policy we are going to create is for promoting an image that has passed a scan with zero (0) **Critical** vulnerabilities. The policy will target the `ci`/`dc19` repository.
 
@@ -318,7 +285,7 @@ selected.
 
 When we push an image to `ci`/`dc19_build` it will get scanned. Based on that scan report we could see the image moved to `ci`/`dc19`. Lets push a few images to see if it worked.
 
-##  11. <a name='Task5:PullTagPushDockerImage'></a>Task 5: Pull / Tag / Push Docker Image
+## Task 5: Pull / Tag / Push Docker Image
 
 Lets pull, tag, and push a few images to YOUR DTR.
 
@@ -370,7 +337,7 @@ In order to push and pull images to DTR we will need to take advantage of PWD's 
 	docker push $DTR_URL/ci/dc19_build:alpine
 	```
 
-##  12. <a name='Task6:ReviewScanResults'></a>Task 6: Review Scan Results
+## Task 6: Review Scan Results
 
 Lets take a good look at the scan results from the images. Please keep in mind this will take a few minutes to complete.
 
@@ -396,7 +363,7 @@ Lets take a good look at the scan results from the images. Please keep in mind t
 
     Now that we know what is in the image. We should probably act upon it.
 
-###  12.1. <a name='Task6.1:HideVulnerabilities'></a>Task 6.1: Hide Vulnerabilities
+### Task 6.1: Hide Vulnerabilities
 
 If we find that they CVE is a false positive. Meaning that it might be disputed, or from OS that you are not using. If this is the case we can simply `Hide` the vulnerability. This will not remove the fact that the CVE was found.
 
@@ -410,7 +377,7 @@ If we click back to `Tags` we can now see that the image does not have a critica
 
 Once we have hidden some CVEs we might want to perform a manual promotion of the image.
 
-##  13. <a name='Task7:ExtendwithImageMirroring'></a>Task 7: Extend with Image Mirroring
+## Task 7: Extend with Image Mirroring
 
 Docker Trusted Registry allows you to create mirroring policies for a repository. When an image gets pushed to a repository and meets a certain criteria, DTR automatically pushes it to repository in another DTR deployment or Docker Hub.
 
@@ -434,7 +401,7 @@ Since we already had an image that had the tag `promoted` we should see that the
 
 ![more](img/mirror3.jpg)
 
-##  14. <a name='Task8:DockerContentTrustImageSigning'></a>Task 8: Docker Content Trust / Image Signing
+## Task 8: Docker Content Trust / Image Signing
 
 Docker Content Trust/Notary provides a cryptographic signature for each image. The signature provides security so that the image requested is the image you get. Read [Notary's Architecture](https://docs.docker.com/notary/service_architecture/) to learn more about how Notary is secure. Since Docker Enterprise is "Secure by Default," Docker Trusted Registry comes with the Notary server out of the box.
 
@@ -557,11 +524,11 @@ Let's sign your first Docker image?
 
 	For example, use the command `cat ~/.docker/trust/tuf/$DTR_URL/ci/dc19/metadata/targets.json | jq '.signed.delegations.keys' | grep public` to extract the certificate.
 
-##  15. <a name='Task9:AutomatewithJenkins'></a>Task 9: Automate with Jenkins
+## Task 9: Automate with Jenkins
 
 In order to automate we need to deploy Jenkins. If you want I can point you to a few Docker Compose yamls. OR we have the easy way. The easy, aka script, deploys Jenkins quickly.
 
-###  15.1. <a name='Task9.1:DeployJenkins'></a>Task 9.1: Deploy Jenkins
+### Task 9.1: Deploy Jenkins
 
 1. Take a look at the script. Also notice the script will check variables, and then runs `docker run`.
 
@@ -612,7 +579,7 @@ In order to automate we need to deploy Jenkins. If you want I can point you to a
 	![finish](img/jenkins_finish.jpg)
 
 
-###  15.2. <a name='Task9.2:PlumbJenkins'></a>Task 9.2: Plumb Jenkins
+### Task 9.2: Plumb Jenkins
 
 Now that we have Jenkins setup and running we need to add 3 additional plugins - Blue Ocean, Generic Webhook Trigger and Piepline:
 
@@ -665,7 +632,7 @@ Now that we have Jenkins setup and running we need to add 3 additional plugins -
 10. Review the `ci`/`dc19` repository in DTR. You should now see a bunch of tags that have been promoted.
 	![supply](img/automated_supply.jpg)
 
-###  15.3. <a name='Task9.3:Webhooks'></a>Task 9.3: Webhooks
+### Task 9.3: Webhooks
 
 Now that we have Jenkins setup we can extend with webhooks. In Jenkins speak a webhook is simply a build trigger. Let's configure one.
 
@@ -683,6 +650,6 @@ Now that we have Jenkins setup we can extend with webhooks. In Jenkins speak a w
 
 	![hub_mirror](img/hub_mirror.jpg)
 
-##  16. <a name='Conclusion'></a>Conclusion
+## Conclusion
 
 In this workshop we were able use the tools that are included with Docker Trusted Registry to build a basic Automated Secure Supply Chain. Hopefully with this foundation you can build your own organizations Secure Supply Chain!
