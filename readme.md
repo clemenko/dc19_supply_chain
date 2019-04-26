@@ -39,6 +39,17 @@ In this lab you will integrate Docker Enterpise Edition Advanced in to your deve
 >   * [Task 9.3: Webhooks](#task9.3)
 > * [Conclusion](#conclusion)
 
+
+- [Document conventions](#document-conventions)
+- [Abbreviations](#abbreviations)
+- [Prerequisites](#prerequisites)
+- [Understanding the Play With Docker Interface](#understanding-the-play-with-docker-interface)
+  * [1. Console Access](#1-console-access)
+  * [2. Access to your Universal Control Plane (UCP) and Docker Trusted Registry (DTR) servers](#2-access-to-your-universal-control-plane--ucp--and-docker-trusted-registry--dtr--servers)
+  * [3. Session Information](#3-session-information)
+- [Introduction](#introduction)
+
+
 ## Document conventions
 
 When you encounter a phrase in between `<` and `>`  you are meant to substitute in a different value.
