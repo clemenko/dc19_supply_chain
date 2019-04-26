@@ -25,24 +25,24 @@ In this lab you will integrate Docker Enterpise Edition Advanced in to your deve
 >   * [2. Access to your Universal Control Plane (UCP) and Docker Trusted Registry (DTR) servers](#2-access-to-your-universal-control-plane-ucp-and-docker-trusted-registry-dtr-servers)
 >   * [3. Session Information](#3-session-information)
 > * [Introduction](#introduction)
-> * [Task 1 Accessing PWD](#task-1-accessing-pwd)
->   * [Task 1.1 Set Up Environment Variables](#task-11-set-up-environment-variables)
-> * [Task 2 Enable Docker Image Scanning](#task-2-enable-docker-image-scanning)
-> * [Task 3 Create Jenkins User and Organization](#task-3-create-jenkins-user-and-organization)
->   * [Task 3.1 Create Jenkins Organization](#task-31-create-jenkins-organization)
->   * [Task 3.2 Create Jenkins User](#task-32-create-jenkins-user)
->   * [Task 3.3 Create Jenkins DTR Token](#task-33-create-jenkins-dtr-token)
-> * [Task 4: Create DTR Repositories](#task-4-create-dtr-repositories)
->   * [Task 4.1 Create Promotion Policy - Private to Public](#task-41-create-promotion-policy---private-to-public)
-> * [Task 5 Pull / Tag / Push Docker Image](#task-5-pull--tag--push-docker-image)
-> * [Task 6 Review Scan Results](#task-6-review-scan-results)
->   * [Task 6.1 Hide Vulnerabilities](#task-61-hide-vulnerabilities)
-> * [Task 7 Extend with Image Mirroring](#task-7-extend-with-image-mirroring)
-> * [Task 8 Docker Content Trust / Image Signing](#task-8-docker-content-trust--image-signing)
-> * [Task 9 Automate with Jenkins](#task-9-automate-with-jenkins)
->   * [Task 9.1 Deploy Jenkins](#task-91-deploy-jenkins)
->   * [Task 9.2 Plumb Jenkins](#task-92-plumb-jenkins)
->   * [Task 9.3 Webhooks](#task-93-webhooks)
+> * [Task 1 Accessing PWD](#task-1---accessing-pwd)
+>   * [Task 1.1 Set Up Environment Variables](#task-11---set-up-environment-variables)
+> * [Task 2 Enable Docker Image Scanning](#task-2---enable-docker-image-scanning)
+> * [Task 3 Create Jenkins User and Organization](#task-3---create-jenkins-user-and-organization)
+>   * [Task 3.1 Create Jenkins Organization](#task-31---create-jenkins-organization)
+>   * [Task 3.2 Create Jenkins User](#task-32---create-jenkins-user)
+>   * [Task 3.3 Create Jenkins DTR Token](#task-33--create-jenkins-dtr-token)
+> * [Task 4: Create DTR Repositories](#task-4---create-dtr-repositories)
+>   * [Task 4.1 Create Promotion Policy - Private to Public](#task-41---create-promotion-policy---private-to-public)
+> * [Task 5 Pull / Tag / Push Docker Image](#task-5---pull--tag--push-docker-image)
+> * [Task 6 Review Scan Results](#task-6---review-scan-results)
+>   * [Task 6.1 Hide Vulnerabilities](#task-61---hide-vulnerabilities)
+> * [Task 7 Extend with Image Mirroring](#task-7---extend-with-image-mirroring)
+> * [Task 8 Docker Content Trust / Image Signing](#task-8---docker-content-trust--image-signing)
+> * [Task 9 Automate with Jenkins](#task-9---automate-with-jenkins)
+>   * [Task 9.1 Deploy Jenkins](#task-91---deploy-jenkins)
+>   * [Task 9.2 Plumb Jenkins](#task-92---plumb-jenkins)
+>   * [Task 9.3 Webhooks](#task-93---webhooks)
 > * [Conclusion](#conclusion)
 
 ## Document conventions
@@ -99,13 +99,13 @@ Throughout the lab you will be asked to provide either hostnames or login creden
 
 This workshop is designed to demonstrate the power of Docker Secrets, Image Promotion, Scanning Engine, and Content Trust. We will walk through creating a few secrets. Deploying a stack that uses the secret. Then we will create a Docker Trusted Registry repository where we can create a promotion policy. The promotion policy leverages the output from Image Scanning result. This is the foundation of creating a Secure Supply Chain. You can read more about  secure supply chains for our [Secure Supply Chain reference architecture](https://success.docker.com/article/secure-supply-chain).
 
-## Task 1 Accessing PWD
+## Task 1 - Accessing PWD
 
 1. Navigate in your web browser to the URL the workshop organizer provided to you. **Chrome is advised!**
 
 2. Fill out the form, and click `submit`. You will then be redirected to the PWD environment. It may take a minute or so to provision out your PWD environment.
 
-### Task 1.1 Set Up Environment Variables
+### Task 1.1 - Set Up Environment Variables
 
 We are going to use `worker3` for **ALL** our command line work. Click on `worker3` to activate the shell.
 
@@ -126,7 +126,7 @@ Once cloned, now we can run the `var_setup.sh` script.
 Now your PWD environment variables are setup. We will use the variables for some scripting.
 
 
-## Task 2 Enable Docker Image Scanning
+## Task 2 - Enable Docker Image Scanning
 
 Before we create the repositories, let's start with enabling the Docker Image Scanning engine.
 
@@ -144,11 +144,11 @@ Before we create the repositories, let's start with enabling the Docker Image Sc
 3. Select `Enable Scanning`. Leave it in `Online` mode and select `Enable`. Press the button `Enable Online Scanning`. The CVE database will start downloading. This can take a few minutes. Please be patient for it to complete.
 ![enable_scan](img/scanning_enable.jpg)
 
-## Task 3 Create Jenkins User and Organization
+## Task 3 - Create Jenkins User and Organization
 
 In order to setup our automation we need to create an organization and a user account for Jenkins. We are going to create a user named `jenkins` in the organization `ci`.
 
-### Task 3.1 Create Jenkins Organization
+### Task 3.1 - Create Jenkins Organization
 
 1. From the `PWD` main page click on `DTR`.
   ![orgs](img/orgs_1.jpg)
@@ -162,7 +162,7 @@ Now we should see the organization named `ci`.
 
 ![new_org2](img/orgs_2.jpg)
 
-### Task 3.2 Create Jenkins User
+### Task 3.2 - Create Jenkins User
 
 While remaining in DTR we can create the user from here.
 
@@ -176,7 +176,7 @@ Now change the permissions for the `jenkins` account to `Org Owner`.
 
 ![admin](img/org_admin.jpg)
 
-### Task 3.3 Create Jenkins DTR Token
+### Task 3.3 - Create Jenkins DTR Token
 
 Now that we have the `jenkins` user created we need to add a token for use with DTR's API.
 
@@ -198,7 +198,7 @@ Lets add it to the `worker3` environment. Replace `<TOKEN>` with the token from 
 export DTR_TOKEN=<TOKEN>
 ```
 
-## Task 4: Create DTR Repositories
+## Task 4 - Create DTR Repositories
 
 We now need to access Docker Trusted Registry to setup two repositories.
 
@@ -268,7 +268,7 @@ curl -X POST -k -L \
 5. We should have two repositories now.
   ![new_repo](img/repo_list.jpg)
 
-### Task 4.1 Create Promotion Policy - Private to Public
+### Task 4.1 - Create Promotion Policy - Private to Public
 
 With the two repositories setup we can now define the promotion policy. The first policy we are going to create is for promoting an image that has passed a scan with zero (0) **Critical** vulnerabilities. The policy will target the `ci`/`dc19` repository.
 
@@ -282,7 +282,7 @@ selected.
 
 When we push an image to `ci`/`dc19_build` it will get scanned. Based on that scan report we could see the image moved to `ci`/`dc19`. Lets push a few images to see if it worked.
 
-## Task 5 Pull / Tag / Push Docker Image
+## Task 5 - Pull / Tag / Push Docker Image
 
 Lets pull, tag, and push a few images to YOUR DTR.
 
@@ -333,7 +333,7 @@ In order to push and pull images to DTR we will need to take advantage of PWD's 
   docker push $DTR_URL/ci/dc19_build:alpine
   ```
 
-## Task 6 Review Scan Results
+## Task 6 - Review Scan Results
 
 Lets take a good look at the scan results from the images. Please keep in mind this will take a few minutes to complete.
 
@@ -359,7 +359,7 @@ Lets take a good look at the scan results from the images. Please keep in mind t
 
     Now that we know what is in the image. We should probably act upon it.
 
-### Task 6.1 Hide Vulnerabilities
+### Task 6.1 - Hide Vulnerabilities
 
 If we find that they CVE is a false positive. Meaning that it might be disputed, or from OS that you are not using. If this is the case we can simply `Hide` the vulnerability. This will not remove the fact that the CVE was found.
 
@@ -373,7 +373,7 @@ If we click back to `Tags` we can now see that the image does not have a critica
 
 Once we have hidden some CVEs we might want to perform a manual promotion of the image.
 
-## Task 7 Extend with Image Mirroring
+## Task 7 - Extend with Image Mirroring
 
 Docker Trusted Registry allows you to create mirroring policies for a repository. When an image gets pushed to a repository and meets a certain criteria, DTR automatically pushes it to repository in another DTR deployment or Docker Hub.
 
@@ -396,7 +396,7 @@ Since we already had an image that had the tag `promoted` we should see that the
 
 ![more](img/mirror3.jpg)
 
-## Task 8 Docker Content Trust / Image Signing
+## Task 8 - Docker Content Trust / Image Signing
 
 Docker Content Trust/Notary provides a cryptographic signature for each image. The signature provides security so that the image requested is the image you get. Read [Notary's Architecture](https://docs.docker.com/notary/service_architecture/) to learn more about how Notary is secure. Since Docker Enterprise is "Secure by Default," Docker Trusted Registry comes with the Notary server out of the box.
 
@@ -517,11 +517,11 @@ Let's sign your first Docker image?
 
     For example, use the command `cat ~/.docker/trust/tuf/$DTR_URL/ci/dc19/metadata/targets.json | jq '.signed.delegations.keys' | grep public` to extract the certificate.
 
-## Task 9 Automate with Jenkins
+## Task 9 - Automate with Jenkins
 
 In order to automate we need to deploy Jenkins. If you want I can point you to a few Docker Compose yamls. OR we have the easy way. The easy, aka script, deploys Jenkins quickly.
 
-### Task 9.1 Deploy Jenkins
+### Task 9.1 - Deploy Jenkins
 
 1. Take a look at the script. Also notice the script will check variables, and then runs `docker run`.
 
@@ -571,7 +571,7 @@ In order to automate we need to deploy Jenkins. If you want I can point you to a
 9. And we are done installing Jenkins. Click `Start using Jenkins`
   ![finish](img/jenkins_finish.jpg)
 
-### Task 9.2 Plumb Jenkins
+### Task 9.2 - Plumb Jenkins
 
 Now that we have Jenkins setup and running we need to add 3 additional plugins - Blue Ocean, Generic Webhook Trigger and Piepline:
 
@@ -624,7 +624,7 @@ Now that we have Jenkins setup and running we need to add 3 additional plugins -
 10. Review the `ci`/`dc19` repository in DTR. You should now see a bunch of tags that have been promoted.
   ![supply](img/automated_supply.jpg)
 
-### Task 9.3 Webhooks
+### Task 9.3 - Webhooks
 
 Now that we have Jenkins setup we can extend with webhooks. In Jenkins speak a webhook is simply a build trigger. Let's configure one.
 
