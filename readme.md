@@ -18,9 +18,8 @@ In this lab you will integrate Docker Enterpise Edition Advanced in to your deve
 >
 > * [Abbreviations](#Abbreviations)
 > * [Prerequisites](#Prerequisites)
-> * [Understanding the Play With Docker Interface](#Understanding%20the%20Play%20With%20Docker%20Interface)
-> * [Introduction](#introduction)
-> * [Task 1: Accessing PWD](#task1)
+> * [Introduction](#Introduction)
+> * [Task 1: Accessing PWD](#Task%201:%20Accessing%20PWD)
 >   * [Task 1.1: Set Up Environment Variables](#task1.1)
 > * [Task 2: Enable Docker Image Scanning](#task2)
 > * [Task 3: Create Jenkins User and Organization](#task3)
@@ -90,7 +89,7 @@ Throughout the lab you will be asked to provide either hostnames or login creden
 
 **Note:**  There are a limited number of lab connections available for the day. You can use the same session all day by simply keeping your browser connection to the PWD environment open between sessions. This will help us get as many people connected as possible, and prevent you needing to get new credentials and hostnames in every lab. However, if you do lose your connection between sessions simply go to the PWD URL again and you will be given a new session.
 
-## <a name="introduction"></a> Introduction
+## Introduction
 
 This workshop is designed to demonstrate the power of Docker Secrets, Image Promotion, Scanning Engine, and Content Trust. We will walk through creating a few secrets. Deploying a stack that uses the secret. Then we will create a Docker Trusted Registry repository where we can create a promotion policy. The promotion policy leverages the output from Image Scanning result. This is the foundation of creating a Secure Supply Chain. You can read more about  secure supply chains for our [Secure Supply Chain reference architecture](https://success.docker.com/article/secure-supply-chain).
 
