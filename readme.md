@@ -16,7 +16,9 @@ In this lab you will integrate Docker Enterpise Edition Advanced in to your deve
 
 > **Tasks**:
 >
+> * [Abbreviations](#Abbreviations)
 > * [Prerequisites](#Prerequisites)
+> * [Understanding the Play With Docker Interface](#Understanding%20the%20Play%20With%20Docker%20Interface)
 > * [Introduction](#introduction)
 > * [Task 1: Accessing PWD](#task1)
 >   * [Task 1.1: Set Up Environment Variables](#task1.1)
@@ -44,8 +46,6 @@ When you encounter a phrase in between `<` and `>`  you are meant to substitute 
 We are going to leverage the power of [Play With Docker](http://play-with-docker.com).
 
 ## Abbreviations
-
-<a name="abbreviations"></a>
 
 The following abbreviations are used in this document:
 
