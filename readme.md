@@ -8,7 +8,7 @@
 
 ---
 
-In this lab you will integrate Docker Enterprise Edition Advanced in to your development pipeline. You will build your application from a Dockerfile and push your image to the Docker Trusted Registry (DTR). DTR will scan your image for vulnerabilities so they can be fixed before your application is deployed. This helps you build more secure apps!
+In this lab you will integrate Docker Enterprise in to your development pipeline. You will push an image to the Docker Trusted Registry (DTR). DTR will scan your image for vulnerabilities so they can be fixed before your application is deployed. This helps you build more secure apps!
 
 > **Difficulty**: Intermediate
 >
@@ -57,19 +57,18 @@ The following abbreviations are used in this document:
 * UCP = Universal Control Plane
 * DTR = Docker Trusted Registry
 * DCT = Docker Content Trust
-* EE = Docker Enterprise Edition
 * CVE = Common Vulnerabilities and Exposures
 * PWD = Play With Docker
 
 ## Prerequisites
 
-This lab requires an instance of Docker Enterprise Edition (EE). Docker Enterprise Edition includes Docker Universal Control Plane and Docker Trusted Registry. This lab provides Docker Enterprise.
+This lab requires an instance of Docker Enterprise. Docker Enterprise includes Docker Universal Control Plane and Docker Trusted Registry. This lab provides Docker Enterprise.
 
 ## Understanding the Play With Docker Interface
 
 ![pwd screen](./img/pwd_screen.jpg)
 
-This workshop is only available to people in a pre-arranged workshop. That may happen through a [Docker Meetup](https://events.docker.com/chapters/), a conference workshop that is being led by someone who has made these arrangements, or special arrangements between Docker and your company. The workshop leader will provide you with the URL to a workshop environment that includes [Docker Enterprise Edition](https://www.docker.com/enterprise-edition). The environment will be based on [Play with Docker](https://labs.play-with-docker.com/).
+This workshop is only available to people in a pre-arranged workshop. That may happen through a [Docker Meetup](https://events.docker.com/chapters/), a conference workshop that is being led by someone who has made these arrangements, or special arrangements between Docker and your company. The workshop leader will provide you with the URL to a workshop environment that includes [Docker Enterprise](https://www.docker.com/enterprise-edition). The environment will be based on [Play with Docker](https://labs.play-with-docker.com/).
 
 If none of these apply to you, contact your local [Docker Meetup Chapter](https://events.docker.com/chapters/) and ask if there are any scheduled workshops. In the meantime, you may be interested in the labs available through the [Play with Docker Classroom](https://training.play-with-docker.com/alacart/).
 
