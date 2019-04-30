@@ -1,4 +1,4 @@
-# Secure, Automated Software Supply Chain - Dockercon 2019
+# Building a Secure, Automated Supply Chain - Dockercon 2019
 
 ## Who am i
 
