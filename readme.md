@@ -119,7 +119,7 @@ git clone https://github.com/clemenko/dc19_supply_chain.git
 Once cloned, now we can run the `var_setup.sh` script.
 
 ```bash
-. dc19_supply_chain/scripts/var_setup.sh
+source dc19_supply_chain/scripts/var_setup.sh
 ```
 
 Now your PWD environment variables are setup. We will use the variables for some scripting.
